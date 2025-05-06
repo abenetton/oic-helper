@@ -1,13 +1,11 @@
+from textual import on
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.screen import Screen
-from textual.widgets import Footer, Header, OptionList, ContentSwitcher
-from textual import on
-from textual.reactive import reactive
+from textual.widgets import Footer, Header, ContentSwitcher
 
-from ui.common.bindings import screen_common_bindings
-from ui.components import HostPicker, HostNavigator
 from Config import Config
+from ui.components import HostPicker, HostNavigator
 
 
 class ExploreScreen(Screen):
@@ -31,6 +29,7 @@ class ExploreScreen(Screen):
     @on(HostPicker.OptionSelected)
     def handle_option_selected(self, event: HostPicker.OptionSelected) -> None:
         """Handle option selection."""
+        self.query_one(ContentSwitcher).set_loading(True)  # TODO: NOT WORKING
         self.query_one(ContentSwitcher).current = "host_navigator"
         self.query_one(HostNavigator).host_id = event.option.id
         event.stop()

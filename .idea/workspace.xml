@@ -4,9 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cab67664-1c82-4d15-9385-9307e8ba0edc" name="Changes" comment="feat: Working navigation">
+    <list default="true" id="cab67664-1c82-4d15-9385-9307e8ba0edc" name="Changes" comment="feat: Basic package tree">
+      <change afterPath="$PROJECT_DIR$/oic_tools/OICClient.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oic_tools/OICIntegration.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oic_tools/OICPackage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oic_tools/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/components/HostNavigator.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/HostNavigator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/screens/ExploreScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/screens/ExploreScreen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv.lock" beforeDir="false" afterPath="$PROJECT_DIR$/uv.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +48,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/a.benetton/Documents/Progetti/Boscolo/oic-helper/ui/screens",
+    "last_opened_file_path": "C:/Users/a.benetton/Documents/Progetti/Boscolo/oic-helper/oic_tools",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -52,6 +60,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\a.benetton\Documents\Progetti\Boscolo\oic-helper\oic_tools" />
       <recent name="C:\Users\a.benetton\Documents\Progetti\Boscolo\oic-helper\ui\screens" />
       <recent name="C:\Users\a.benetton\Documents\Progetti\Boscolo\oic-helper" />
     </key>
@@ -104,7 +113,7 @@
       <workItem from="1746453066364" duration="422000" />
       <workItem from="1746453537818" duration="9795000" />
       <workItem from="1746518263852" duration="3664000" />
-      <workItem from="1746537529418" duration="5400000" />
+      <workItem from="1746537529418" duration="8809000" />
     </task>
     <task id="LOCAL-00001" summary="UIInit">
       <option name="closed" value="true" />
@@ -162,7 +171,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746542716371</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat: Basic package tree">
+      <option name="closed" value="true" />
+      <created>1746543957589</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1746543957589</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,7 +202,8 @@
     <MESSAGE value="Working screen stack" />
     <MESSAGE value="checkpoint" />
     <MESSAGE value="feat: Working navigation" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Working navigation" />
+    <MESSAGE value="feat: Basic package tree" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Basic package tree" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

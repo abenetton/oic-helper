@@ -11,8 +11,8 @@ class Host:
 
 class Config:
     def __init__(self, hosts: dict[str, Host] = None, packages: list[str] = None):
-        self.hosts = hosts
-        self.packages = packages
+        self.hosts: dict[str, Host] = hosts
+        self.packages: list[str] = packages
 
     @classmethod
     def from_dict(cls, data):
