@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cab67664-1c82-4d15-9385-9307e8ba0edc" name="Changes" comment="checkpoint">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/config.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/oic_helper.tcss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/report/2025-04-30_integration_report.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/report/2025-05-05_integration_report.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/screens/CompareScreen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/screens/ExploreScreen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/screens/screen_list.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +101,7 @@
       <updated>1746453065092</updated>
       <workItem from="1746453066364" duration="422000" />
       <workItem from="1746453537818" duration="9795000" />
-      <workItem from="1746518263852" duration="2976000" />
+      <workItem from="1746518263852" duration="3664000" />
     </task>
     <task id="LOCAL-00001" summary="UIInit">
       <option name="closed" value="true" />
