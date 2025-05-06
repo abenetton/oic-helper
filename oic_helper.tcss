@@ -6,3 +6,9 @@ OptionList {
     width: 70%;
     height: 80%;
 }
+
+
+ContentSwitcher {
+    width: 70%;
+    height: 80%;
+}

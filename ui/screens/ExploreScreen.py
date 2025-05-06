@@ -1,35 +1,44 @@
 from textual.app import ComposeResult
+from textual.binding import Binding
 from textual.screen import Screen
-from textual.widgets import Footer, Header, OptionList
+from textual.widgets import Footer, Header, OptionList, ContentSwitcher
 from textual import on
+from textual.reactive import reactive
 
 from ui.common.bindings import screen_common_bindings
-from ui.components import HostPicker
+from ui.components import HostPicker, HostNavigator
 from Config import Config
 
 
 class ExploreScreen(Screen):
     """Explore screen of the OIC Helper app."""
-    BINDINGS = screen_common_bindings
+    BINDINGS = [
+        Binding("escape", "go_back", "Go Back")
+    ]
 
-    def __init__(self, name = None, id = None, classes = None):
-        super().__init__(name, id, classes)
+    def __init__(self, name=None, cid=None, classes=None):
+        super().__init__(name, cid, classes)
         self.config = Config()
         self.config.load_from_file('data/config.json')
 
-
     def compose(self) -> ComposeResult:
         yield Header()
-        yield HostPicker(self.config)
+        with ContentSwitcher(initial="host_picker"):
+            yield HostPicker(id="host_picker", config=self.config)
+            yield HostNavigator(id="host_navigator", config=self.config)  # Valore predefinito
         yield Footer()
 
-    # Generate event handler for option list
-    @on(OptionList.OptionSelected)
-    def handle_option_selected(self, event: OptionList.OptionSelected) -> None:
+    @on(HostPicker.OptionSelected)
+    def handle_option_selected(self, event: HostPicker.OptionSelected) -> None:
         """Handle option selection."""
+        self.query_one(ContentSwitcher).current = "host_navigator"
+        self.query_one(HostNavigator).host_id = event.option.id
+        event.stop()
 
-        if event.option.id not in self.config.hosts:
-            self.log(f"Invalid option selected: {event.option.id}")
-            return
-
-        
+    def action_go_back(self) -> None:
+        """Go back to the previous screen."""
+        if self.query_one(ContentSwitcher).current == "host_picker":
+            self.app.pop_screen()
+        else:
+            self.query_one(ContentSwitcher).current = "host_picker"
+            self.query_one(HostPicker).focus()

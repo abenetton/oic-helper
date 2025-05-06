@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="cab67664-1c82-4d15-9385-9307e8ba0edc" name="Changes" comment="checkpoint">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oic_helper.tcss" beforeDir="false" afterPath="$PROJECT_DIR$/oic_helper.tcss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/components/HostNavigator.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/HostNavigator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/components/HostPicker.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/HostPicker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/components/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/screens/ExploreScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/screens/ExploreScreen.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +41,7 @@
     "Python.Textual Console.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/a.benetton/Documents/Progetti/Boscolo/oic-helper/ui/screens",
@@ -102,6 +108,7 @@
       <workItem from="1746453066364" duration="422000" />
       <workItem from="1746453537818" duration="9795000" />
       <workItem from="1746518263852" duration="3664000" />
+      <workItem from="1746537529418" duration="4305000" />
     </task>
     <task id="LOCAL-00001" summary="UIInit">
       <option name="closed" value="true" />

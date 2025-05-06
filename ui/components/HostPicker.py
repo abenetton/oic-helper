@@ -4,6 +4,6 @@ from textual.widgets.option_list import Option
 from Config import Config
 
 class HostPicker(OptionList):
-    def __init__(self, config: Config) -> None:
-        super().__init__()
+    def __init__(self, id, config: Config) -> None:
+        super().__init__(id=id)
         self.add_options([Option(value.label, id=key) for key, value in config.hosts.items()])
