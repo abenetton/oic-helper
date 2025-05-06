@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cab67664-1c82-4d15-9385-9307e8ba0edc" name="Changes" comment="feat: Basic package tree">
-      <change afterPath="$PROJECT_DIR$/oic_tools/OICClient.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/oic_tools/OICIntegration.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/oic_tools/OICPackage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/oic_tools/__init__.py" afterDir="false" />
+    <list default="true" id="cab67664-1c82-4d15-9385-9307e8ba0edc" name="Changes" comment="feat: Query packages from OIC">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/components/HostNavigator.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/HostNavigator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/screens/ExploreScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/screens/ExploreScreen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv.lock" beforeDir="false" afterPath="$PROJECT_DIR$/uv.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +105,7 @@
       <workItem from="1746453066364" duration="422000" />
       <workItem from="1746453537818" duration="9795000" />
       <workItem from="1746518263852" duration="3664000" />
-      <workItem from="1746537529418" duration="8809000" />
+      <workItem from="1746537529418" duration="9934000" />
     </task>
     <task id="LOCAL-00001" summary="UIInit">
       <option name="closed" value="true" />
@@ -179,7 +171,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746543957589</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feat: Query packages from OIC">
+      <option name="closed" value="true" />
+      <created>1746547502553</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1746547502553</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,7 +203,8 @@
     <MESSAGE value="checkpoint" />
     <MESSAGE value="feat: Working navigation" />
     <MESSAGE value="feat: Basic package tree" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Basic package tree" />
+    <MESSAGE value="feat: Query packages from OIC" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Query packages from OIC" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
