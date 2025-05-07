@@ -1,4 +1,4 @@
-from .OICClient import OICClient
+from .OICHost import OICHost
 from .OICPackage import OICPackage
 
-__all__ = ['OICClient', 'OICPackage']
+__all__ = ['OICHost', 'OICPackage']
