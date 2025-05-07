@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cab67664-1c82-4d15-9385-9307e8ba0edc" name="Changes" comment="feat: Query packages from OIC">
-      <change afterPath="$PROJECT_DIR$/oic_tools/OICHost.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oic_tools/OICClient.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oic_tools/OICHost.py" beforeDir="false" afterPath="$PROJECT_DIR$/oic_tools/OICHost.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oic_tools/OICIntegration.py" beforeDir="false" afterPath="$PROJECT_DIR$/oic_tools/OICIntegration.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/oic_tools/OICPackage.py" beforeDir="false" afterPath="$PROJECT_DIR$/oic_tools/OICPackage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/oic_tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/oic_tools/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/components/HostNavigator.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/HostNavigator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/screens/ExploreScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/screens/ExploreScreen.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +38,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.Config.executor": "Debug",
+    "Python.Config.executor": "Run",
     "Python.Textual Console.executor": "Run",
     "Python.main.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -138,7 +135,7 @@
       <workItem from="1746453537818" duration="9795000" />
       <workItem from="1746518263852" duration="3664000" />
       <workItem from="1746537529418" duration="9934000" />
-      <workItem from="1746611741290" duration="5336000" />
+      <workItem from="1746611741290" duration="7844000" />
     </task>
     <task id="LOCAL-00001" summary="UIInit">
       <option name="closed" value="true" />
@@ -244,13 +241,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/oic_tools/OICHost.py</url>
-          <line>12</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -263,6 +253,6 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/oic_helper$main.coverage" NAME="main Coverage Results" MODIFIED="1746625321939" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/oic_helper$Textual_Console.coverage" NAME="Textual Console Coverage Results" MODIFIED="1746454450846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/oic_helper$Config.coverage" NAME="Config Coverage Results" MODIFIED="1746625904432" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/oic_helper$Config.coverage" NAME="Config Coverage Results" MODIFIED="1746626131663" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

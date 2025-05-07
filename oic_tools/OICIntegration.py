@@ -1,17 +1,24 @@
+from typing import List, Tuple
+
+
 class OICIntegration:
     """
     This class is responsible for integrating with the OIC (Oracle Integration Cloud) system.
     It handles the connection to the OIC, sending requests, and processing responses.
     """
 
-    def __init__(self, oic_url, client_id, client_secret):
-        """
-        Initializes the OICIntegration class with the provided OIC URL, client ID, and client secret.
+    def __init__(self, id: str, code: str, name: str, status: str, version: str):
+        self.id = id
+        self.code = code
+        self.name = name
+        self.versions: List[Tuple[str, str]] = [(version, status)]
 
-        :param oic_url: The URL of the OIC instance.
-        :param client_id: The client ID for authentication.
-        :param client_secret: The client secret for authentication.
+    def add_version(self, version: str, status: str) -> None:
         """
-        self.oic_url = oic_url
-        self.client_id = client_id
-        self.client_secret = client_secret
+        Adds a new version to the integration.
+
+        :param version: The version of the integration.
+        :param status: The status of the integration.
+        """
+        self.versions.append((version, status))
+        self.versions = sorted(self.versions, key=lambda x: x[0], reverse=True)

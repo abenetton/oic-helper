@@ -10,9 +10,9 @@ class OICHost:
         self.base_url = base_url
         self.token = token
         self.priority_package_ids = sorted(priority_package_ids)
-        self.packages: dict[str, OICPackage] = {pkg_id: OICPackage(pkg_id) for pkg_id in priority_package_ids}
-        self.packages_loaded = False
         self.client = Client(base_url=self.base_url, headers={"Authorization": f"Basic {self.token}"})
+        self.packages: dict[str, OICPackage] = {pkg_id: OICPackage(self.client, pkg_id) for pkg_id in priority_package_ids}
+        self.packages_loaded = False
 
     def load_all_packages(self) -> None:
         """
@@ -23,7 +23,7 @@ class OICHost:
         response = self.client.get("/ic/api/integration/v1/packages")
         if response.status_code == 200:
             resp_obj = response.json()
-            self.packages = {package.get("id"): OICPackage(package.get("id"), package.get("name"),
+            self.packages = {package.get("id"): OICPackage(self.client, package.get("id"), package.get("name"),
                                                            package.get("countOfIntegrations")) for package in
                              resp_obj.get("items", [])}
             self.packages_loaded = True
