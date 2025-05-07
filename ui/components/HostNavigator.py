@@ -49,8 +49,13 @@ class HostNavigator(Tree):
     def tree_node_expanded(self, event: Tree.NodeExpanded) -> None:
         self.log(f"Node expanded: {event.node.data}")
         if not event.node.children and event.node.data and event.node.data.integrations_loaded is False:
+            # Load all integrations for the package
             integrations: dict[str, OICIntegration] = event.node.data.get_all_integrations()
 
+            # Regenerate label with integration count
+            event.node.label = f"{event.node.data.name} ({event.node.data.integration_num})"
+
+            # Add integrations to the tree
             for integration in integrations.values():
                 version = integration.versions[0] if integration.versions else ""
                 label = f"{integration.name} - ({version[0]}) - {version[1]}"

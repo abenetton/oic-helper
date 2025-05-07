@@ -21,6 +21,8 @@ class OICPackage:
         if response.status_code == 200:
             resp_obj = response.json()
 
+            self.integration_num = resp_obj.get("countOfIntegrations", 0)
+
             # For each integration, either add it to the list or update the existing one with new versions
             for integration in resp_obj.get("integrations", []):
                 integration_code = integration.get("code")
