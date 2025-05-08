@@ -31,19 +31,29 @@ class OICHost:
             self.packages_loaded = False
             raise Exception(f"Failed to fetch packages: {response.status_code} - {response.text}")
 
-    def get_sorted_package_ids(self, priority_packages_sort: bool = False) -> list[str]:
+    def get_all_packages(self) -> dict[str, OICPackage]:
+        """
+        Returns all packages.
+
+        :return: Dictionary of packages.
+        """
+        if not self.packages_loaded:
+            self.load_all_packages()
+        return self.packages
+
+    def get_sorted_package_ids(self, priority_packages_only: bool = False) -> list[str]:
         """Return a sorted list of packages, optionally prioritizing favorites."""
         package_ids = self.packages.keys()
 
-        if priority_packages_sort:
+        if priority_packages_only:
+            return sorted(self.priority_package_ids)
+        else:
             # Split packages into two lists, one for those with name in config and one for those not
             packages_priority = [pkg for pkg in package_ids if pkg in self.priority_package_ids]
             packages_not_priority = [pkg for pkg in package_ids if pkg not in self.priority_package_ids]
 
             # Join the two lists keeping the packages in config first and sorting individual lists by name
             return sorted(packages_priority) + sorted(packages_not_priority)
-        else:
-            return sorted(package_ids)
 
     def __repr__(self):
         return f"Host(label={self.label}, base_url={self.base_url}, token=****)"

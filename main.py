@@ -32,6 +32,10 @@ class OICHelper(App):
 
         app.push_screen(event.option.id)
 
+    def on_mount(self) -> None:
+        """Called when the app is mounted."""
+        self.push_screen("explore") # TODO: Remove after testing
+
 
 if __name__ == "__main__":
     app = OICHelper()
