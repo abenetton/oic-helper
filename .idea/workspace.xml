@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cab67664-1c82-4d15-9385-9307e8ba0edc" name="Changes" comment="feat: Query packages from OIC">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oic_tools/OICHost.py" beforeDir="false" afterPath="$PROJECT_DIR$/oic_tools/OICHost.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/components/HostNavigator.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/HostNavigator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -165,7 +163,7 @@
       <workItem from="1746518263852" duration="3664000" />
       <workItem from="1746537529418" duration="9934000" />
       <workItem from="1746611741290" duration="9245000" />
-      <workItem from="1746690286485" duration="11886000" />
+      <workItem from="1746690286485" duration="12979000" />
     </task>
     <task id="LOCAL-00001" summary="UIInit">
       <option name="closed" value="true" />

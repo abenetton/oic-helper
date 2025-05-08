@@ -1,3 +1,6 @@
+from idlelib.tree import TreeNode
+
+from textual import events  # Import events for key handling
 from textual import on
 from textual.binding import Binding
 from textual.reactive import reactive
@@ -12,7 +15,7 @@ class HostNavigator(Tree):
         Binding("a", "show_all", "Show all packages"),
         Binding("a", "hide_non_priority", "Show only priority packages"),
         Binding("p", "mark_priority", "Mark as priority"),
-        Binding("p", "mark_not_priority", "Mark as non-priority"),
+        Binding("p", "mark_not_priority", "Mark as non-priority")
     ]
 
     load_all_packages = reactive(False)
@@ -31,11 +34,14 @@ class HostNavigator(Tree):
             return False
         if action == "hide_non_priority" and self.load_all_packages == False:
             return False
-        if action == "mark_priority" and self.cursor_node and type(self.cursor_node.data) == OICPackage and self.cursor_node.data.id in self.cursor_node.parent.data.priority_package_ids:
+        if action == "mark_priority" and self.cursor_node and type(
+                self.cursor_node.data) == OICPackage and self.cursor_node.data.id in self.cursor_node.parent.data.priority_package_ids:
             return False
-        if action == "mark_not_priority" and self.cursor_node and type(self.cursor_node.data) == OICPackage and self.cursor_node.data.id not in self.cursor_node.parent.data.priority_package_ids:
+        if action == "mark_not_priority" and self.cursor_node and type(
+                self.cursor_node.data) == OICPackage and self.cursor_node.data.id not in self.cursor_node.parent.data.priority_package_ids:
             return False
-        if action in ["mark_priority", "mark_not_priority"] and self.cursor_node and type(self.cursor_node.data) != OICPackage:
+        if action in ["mark_priority", "mark_not_priority"] and self.cursor_node and type(
+                self.cursor_node.data) != OICPackage:
             return None
 
         return True
@@ -109,7 +115,8 @@ class HostNavigator(Tree):
             package = self.cursor_node.data
             host.priority_package_ids.append(package.id)
             host.priority_package_ids.sort()
-            self.cursor_node.set_label(f"{("", "*")[package.id in host.priority_package_ids]} {package.name} ({package.integration_num})",)
+            self.cursor_node.set_label(
+                f"{("", "*")[package.id in host.priority_package_ids]} {package.name} ({package.integration_num})", )
 
     def action_mark_not_priority(self):
         """Mark the selected package as non-priority."""
@@ -120,7 +127,29 @@ class HostNavigator(Tree):
             package = self.cursor_node.data
             host.priority_package_ids.remove(package.id)
             host.priority_package_ids.sort()
-            self.cursor_node.set_label(f"{("", "*")[package.id in host.priority_package_ids]} {package.name} ({package.integration_num})",)
+            self.cursor_node.set_label(
+                f"{("", "*")[package.id in host.priority_package_ids]} {package.name} ({package.integration_num})", )
+
+    async def on_key(self, event: events.Key) -> None:
+        """Handle key press events for expanding and contracting nodes."""
+        if event.key == "left":
+            # Contract the current node or move to the parent node
+            if self.cursor_node:
+                if self.cursor_node.is_expanded:
+                    self.cursor_node.collapse()
+                else:
+                    tmp = self.cursor_node.parent
+                    while tmp:
+                        if tmp.is_expanded:
+                            self.select_node(tmp)
+                            tmp.collapse()
+                            break
+                        else:
+                            tmp = tmp.parent
+        elif event.key == "right":
+            # Expand the current node if possible
+            if self.cursor_node and not self.cursor_node.is_expanded: #On leaves everything goes very wrong
+                self.cursor_node.expand()
 
     def on_mount(self):
         """Called when the app is mounted."""
