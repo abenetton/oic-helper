@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from enum import Enum
 from typing import List, Tuple
+from loguru import logger
 
 class OICIntegration:
     """
@@ -33,7 +34,11 @@ class OICIntegration:
         :param other: Another OICIntegration instance.
         :return: True if they are the same, False otherwise.
         """
-        return self.OICCompare(self.name, self.versions[0], other.versions[0] if other else None)
+        if not other:
+            logger.warning(f"OICIntegration {self.id} has no corresponding integration to compare with.")
+
+        res = self.OICCompare(self.name, self.versions[0], other.versions[0] if other else None)
+        return res
 
     class OICCompare:
         """
@@ -80,4 +85,4 @@ class OICIntegration:
             elif version1[1] != 'ACTIVATED' and version2[1] == 'ACTIVATED':
                 return cls.CompareResultEnum.HOST1_INACTIVE
             else:
-                return cls.CompareResultEnum.HOST2_MISSING
+                return cls.CompareResultEnum.EQUAL

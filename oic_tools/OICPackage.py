@@ -1,8 +1,10 @@
 from __future__ import annotations
 
-from httpx import Client
+import logging
 
+from httpx import Client
 from oic_tools.OICIntegration import OICIntegration
+from loguru import logger
 
 
 class OICPackage:
@@ -64,6 +66,9 @@ class OICPackage:
             self.load_all_integrations()
         if other and not other.integrations_loaded:
             other.load_all_integrations()
+
+        if not other:
+            logger.warning(f"OICPackage {self.id} has no corresponding package to compare with.")
 
         return [
             OICIntegration.OICCompare(integration_code, self.integrations[integration_code].versions[0],
