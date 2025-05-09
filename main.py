@@ -8,7 +8,7 @@ from ui.screens.screen_list import top_level_screens  # Importa top_level_screen
 
 class OICHelper(App):
     TITLE = "OIC Helper Tool"
-    BINDINGS = [("c", "open_config", "Open config")]
+    #BINDINGS = [("c", "open_config", "Open config")]
     CSS_PATH = "oic_helper.tcss"
 
     # Popola SCREENS utilizzando top_level_screens
@@ -34,7 +34,7 @@ class OICHelper(App):
 
     def on_mount(self) -> None:
         """Called when the app is mounted."""
-        self.push_screen("explore") # TODO: Remove after testing
+        self.push_screen("compare") # TODO: Remove after testing
 
 
 if __name__ == "__main__":
