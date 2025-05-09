@@ -1,5 +1,10 @@
+from __future__ import annotations
+
+from typing import List, Tuple
+
 from httpx import Client
 
+from oic_tools import OICIntegration
 from oic_tools.OICPackage import OICPackage
 
 
@@ -11,7 +16,8 @@ class OICHost:
         self.token = token
         self.priority_package_ids = sorted(priority_package_ids)
         self.client = Client(base_url=self.base_url, headers={"Authorization": f"Basic {self.token}"})
-        self.packages: dict[str, OICPackage] = {pkg_id: OICPackage(self.client, pkg_id) for pkg_id in priority_package_ids}
+        self.packages: dict[str, OICPackage] = {pkg_id: OICPackage(self.client, pkg_id) for pkg_id in
+                                                priority_package_ids}
         self.packages_loaded = False
 
     def load_all_packages(self) -> None:
@@ -54,6 +60,20 @@ class OICHost:
 
             # Join the two lists keeping the packages in config first and sorting individual lists by name
             return sorted(packages_priority) + sorted(packages_not_priority)
+
+    def compare(self, other: OICHost) -> List[Tuple[str, List[OICIntegration.OICCompare]]]:
+        """
+        Compare two OICHost instances.
+
+        :param other: Another OICHost instance.
+        :return: True if they are equal, False otherwise.
+        """
+
+        # Compare packages
+        return [
+            (pkg_id, self.packages[pkg_id].compare(other.packages[pkg_id] if pkg_id in other.packages else None))
+            for pkg_id in self.priority_package_ids
+        ]
 
     def __repr__(self):
         return f"Host(label={self.label}, base_url={self.base_url}, token=****)"

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from httpx import Client
 
 from oic_tools.OICIntegration import OICIntegration
@@ -29,7 +31,8 @@ class OICPackage:
 
                 if integration_code in self.integrations:
                     # Update existing integration with new version
-                    self.integrations[integration_code].add_version(integration.get("version"), integration.get("status"))
+                    self.integrations[integration_code].add_version(integration.get("version"),
+                                                                    integration.get("status"))
                 else:
                     # Create a new integration
                     self.integrations[integration_code] = OICIntegration(
@@ -52,6 +55,22 @@ class OICPackage:
         if not self.integrations_loaded:
             self.load_all_integrations()
         return self.integrations
+
+    def compare(self, other: OICPackage | None) -> list[OICIntegration.OICCompare]:
+        """
+        Compare two OICPackage instances.
+        """
+        if not self.integrations_loaded:
+            self.load_all_integrations()
+        if other and not other.integrations_loaded:
+            other.load_all_integrations()
+
+        return [
+            OICIntegration.OICCompare(integration_code, self.integrations[integration_code].versions[0],
+                                      other.integrations[integration_code].versions[
+                                          0] if other and integration_code in other.integrations else None)
+            for integration_code in self.integrations.keys()
+        ]
 
     def __str__(self):
         return f"Package ID: {self.id}, Name: {self.name}, Integration Number: {self.integration_num}"

@@ -1,5 +1,3 @@
-from idlelib.tree import TreeNode
-
 from textual import events  # Import events for key handling
 from textual import on
 from textual.binding import Binding
@@ -148,7 +146,7 @@ class HostNavigator(Tree):
                             tmp = tmp.parent
         elif event.key == "right":
             # Expand the current node if possible
-            if self.cursor_node and not self.cursor_node.is_expanded: #On leaves everything goes very wrong
+            if self.cursor_node and not self.cursor_node.is_expanded:  # On leaves everything goes very wrong
                 self.cursor_node.expand()
 
     def on_mount(self):

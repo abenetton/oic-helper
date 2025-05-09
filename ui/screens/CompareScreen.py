@@ -43,7 +43,7 @@ class CompareScreen(Screen):
         selected_hosts = host_picker.get_selected_hosts()
         self.log(f"Selected hosts: {selected_hosts}")
         self.remove_children('#host_picker')
-        self.mount(HostCompare(id="host_compare", hosts=selected_hosts))
+        self.mount(HostCompare(id="host_compare", hosts1=selected_hosts[0], hosts2=selected_hosts[1]))
         self.current_widget_id = "#host_compare"
         self.refresh_bindings()
 
