@@ -7,8 +7,7 @@ OptionList {
     height: 80%;
 }
 
-
-ContentSwitcher {
+HostNavigator {
     width: 70%;
     height: 80%;
 }
