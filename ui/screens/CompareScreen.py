@@ -55,5 +55,5 @@ class CompareScreen(Screen):
         self.current_widget_id = "#host_picker"
         self.refresh_bindings()
 
-    def on_mount(self):
-        self.action_compare()
+    #def on_mount(self):
+    #    self.action_compare()

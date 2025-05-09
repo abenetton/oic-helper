@@ -34,7 +34,7 @@ class OICHelper(App):
 
     def on_mount(self) -> None:
         """Called when the app is mounted."""
-        self.push_screen("compare") # TODO: Remove after testing
+        # self.push_screen("compare") # TODO: Remove after testing
 
 
 if __name__ == "__main__":
