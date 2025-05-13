@@ -6,7 +6,7 @@ class Config:
     CONFIG_FILE = "config.json"
 
     def __init__(self):
-        self.hosts: List[OICHost] = []
+        self.hosts: dict[str, OICHost] = {}
         self.load()
 
     def load(self):
@@ -14,8 +14,8 @@ class Config:
         try:
             with open(self.CONFIG_FILE, "r") as file:
                 data = json.load(file)
-                self.hosts = [
-                    OICHost(
+                self.hosts = {
+                    host["id"]: OICHost(
                         id=host["id"],
                         label=host["label"],
                         base_url=host["base_url"],
@@ -23,7 +23,7 @@ class Config:
                         priority_package_ids=host.get("priority_package_ids", [])
                     )
                     for host in data.get("hosts", [])
-                ]
+                }
         except (FileNotFoundError, json.JSONDecodeError) as e:
             print(f"Error loading config: {e}")
 
@@ -38,7 +38,7 @@ class Config:
                     "token": host.token,
                     "priority_package_ids": host.priority_package_ids
                 }
-                for host in self.hosts
+                for host in self.hosts.values()
             ]
         }
         try:
