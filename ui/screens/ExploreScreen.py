@@ -1,22 +1,23 @@
-from textual.app import ComposeResult
-from textual.screen import Screen
-from textual.widgets import Footer, Header
-
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
 from Config import Config
-from ui.common.bindings import screen_common_bindings
-from ui.components import HostNavigator
+from ui.components.HostNavigator import HostNavigator
 
-
-class ExploreScreen(Screen):
+class ExploreScreen(QWidget):
     """Explore screen of the OIC Helper app."""
-    BINDINGS = screen_common_bindings
 
-    def __init__(self, name=None, cid=None, classes=None):
-        super().__init__(name, cid, classes)
+    def __init__(self, parent=None):
+        super().__init__(parent)
         self.config = Config()
         self.config.load_from_file('data/config.json')
 
-    def compose(self) -> ComposeResult:
-        yield Header()
-        yield HostNavigator(config=self.config)
-        yield Footer()
+        # Main layout
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+
+        # Add header
+        header = QLabel("Explore Screen")
+        self.layout.addWidget(header)
+
+        # Add HostNavigator
+        self.host_navigator = HostNavigator(config=self.config)
+        self.layout.addWidget(self.host_navigator)

@@ -1,42 +1,51 @@
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import Footer, Header, OptionList
-from textual.widgets.option_list import Option
+from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QListWidget, QStackedWidget, QWidget
+import sys
+from ui.screens.screen_list import top_level_screens
 
-from ui.screens.screen_list import top_level_screens  # Importa top_level_screens
+class OICHelper(QMainWindow):
+    """Main application window for the OIC Helper Tool."""
 
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("OIC Helper Tool")
 
-class OICHelper(App):
-    TITLE = "OIC Helper Tool"
-    #BINDINGS = [("c", "open_config", "Open config")]
-    CSS_PATH = "oic_helper.tcss"
+        # Main layout
+        self.central_widget = QWidget()
+        self.setCentralWidget(self.central_widget)
+        self.layout = QVBoxLayout()
+        self.central_widget.setLayout(self.layout)
 
-    # Popola SCREENS utilizzando top_level_screens
-    SCREENS = {key: value.screen for key, value in top_level_screens.items()}
+        # Navigation list
+        self.nav_list = QListWidget()
+        self.layout.addWidget(self.nav_list)
 
-    def compose(self) -> ComposeResult:
-        yield Header()
-        yield OptionList(
-            *[Option(value.label, id=value.identifier) for value in top_level_screens.values()]
-        )
-        yield Footer()
+        # Screen container
+        self.screen_container = QStackedWidget()
+        self.layout.addWidget(self.screen_container)
 
-    # Generate event handler for option list
-    @on(OptionList.OptionSelected)
-    def handle_option_selected(self, event: OptionList.OptionSelected) -> None:
-        """Handle option selection."""
+        # Populate screens
+        self.screens = {}
+        self.populate_screens()
 
-        if event.option.id not in top_level_screens:
-            self.log(f"Invalid option selected: {event.option.id}")
+        # Connect navigation signals
+        self.nav_list.currentRowChanged.connect(self.switch_screen)
+
+    def populate_screens(self):
+        """Populate the navigation list and screen container with screens."""
+        for key, value in top_level_screens.items():
+            screen = value.screen()
+            self.screens[key] = screen
+            self.screen_container.addWidget(screen)
+            self.nav_list.addItem(value.label)
+
+    def switch_screen(self, index):
+        """Switch to the selected screen."""
+        if index < 0 or index >= len(self.screens):
             return
-
-        app.push_screen(event.option.id)
-
-    def on_mount(self) -> None:
-        """Called when the app is mounted."""
-        # self.push_screen("compare") # TODO: Remove after testing
-
+        self.screen_container.setCurrentIndex(index)
 
 if __name__ == "__main__":
-    app = OICHelper()
-    app.run()
+    app = QApplication(sys.argv)
+    window = OICHelper()
+    window.show()
+    sys.exit(app.exec())

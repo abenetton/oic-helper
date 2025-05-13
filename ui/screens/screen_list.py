@@ -1,5 +1,3 @@
-from textual.binding import Binding
-
 from ui.screens.CompareScreen import CompareScreen
 from ui.screens.ExploreScreen import ExploreScreen
 
