@@ -7,7 +7,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("OIC Helper Tool")
-        self.resize(800, 600)
+        self.resize(1000, 600)
 
         # Create the stacked widget
         self.stack = QStackedWidget()
