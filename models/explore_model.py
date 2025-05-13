@@ -1,33 +1,14 @@
 from typing import List
 from oic_tools.OICHost import OICHost
+from models.config import Config
 
 class ExploreModel:
     def __init__(self):
         self.data = []
         self.hosts = []
-
-    def fetch_data(self):
-        # Example method to fetch data
-        self.data = ["Item 1", "Item 2", "Item 3"]
+        self.config = Config()
 
     def fetch_hosts(self) -> List[OICHost]:
-        # Example: Mock data for OICHost objects
-        self.hosts = [
-            OICHost("SVIL", "SVILUPPO", "baseurl", "token", 
-                [
-                    "Boscolo.Services.SRM.Contracts",
-                    "Boscolo.Services.SRM.Dashboard",
-                    "Boscolo.Services.SRM.Notifications",
-                    "Boscolo.Services.SRM.Sourcing",
-                    "Boscolo.Services.SRM.Tenders"
-                ]
-            ),
-            OICHost("PROD", "PRODUZIONE", "baseurl", "token", 
-                [
-                    "Boscolo.Services.SRM.Contracts",
-                    "Boscolo.Services.SRM.Dashboard",
-                    "Boscolo.Services.SRM.Tenders"
-                ]
-            ),
-        ]
+        # Load hosts from the configuration
+        self.hosts = self.config.hosts
         return self.hosts
