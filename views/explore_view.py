@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QVBoxLayout, QLabel, QListWidget, QPushButton, QTreeWidget, QTreeWidgetItem, QListWidgetItem
+from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QLabel, QListWidget, QPushButton, QTreeWidget, QTreeWidgetItem, QListWidgetItem
 from .base_view import BaseView
 from controllers.explore_controller import ExploreController
 from models.explore_model import ExploreModel
@@ -10,19 +10,24 @@ class ExploreView(BaseView):
     def __init__(self, back_callback):
         super().__init__("Explore Feature", back_callback)
 
-        # Use the layout from BaseView
-        self.host_list = QListWidget()
-        self.layout().addWidget(self.host_list)
+        explore_layout = QHBoxLayout()
+        self.layout().addLayout(explore_layout)
 
-        # Tree widget to display packages and integrations
-        self.package_tree = QTreeWidget()
-        self.package_tree.setHeaderLabels(["Package", "Integration"])
-        self.layout().addWidget(self.package_tree)
+        selector_layout = QVBoxLayout()
+        explore_layout.addLayout(selector_layout)
+
+        self.host_list = QListWidget()
+        selector_layout.addWidget(self.host_list)
 
         # Add a confirm button below the host list
         self.confirm_button = QPushButton("Confirm Host Selection")
         self.confirm_button.clicked.connect(self.confirm_selection)
-        self.layout().addWidget(self.confirm_button)
+        selector_layout.addWidget(self.confirm_button)
+
+        # Tree widget to display packages and integrations
+        self.package_tree = QTreeWidget()
+        self.package_tree.setHeaderLabels(["Package", "Integration"])
+        explore_layout.addWidget(self.package_tree)
 
         # Connect signals
         self.host_list.itemSelectionChanged.connect(self.update_confirm_button_state)
