@@ -31,6 +31,22 @@ class ExploreView(BaseView):
         self.package_tree = QTreeWidget()
         self.package_tree.setHeaderLabels(["Integration", "Count", "Version", "Status"])
         explore_layout.addWidget(self.package_tree)
+        
+        # Control buttons for the package tree
+        control_layout = QVBoxLayout()
+        explore_layout.addLayout(control_layout)
+        control_layout.addWidget(QLabel("View controls"))
+        self.show_all_button = QPushButton("Show all")
+        self.show_all_button.setDisabled(True)
+        control_layout.addWidget(self.show_all_button)
+        control_layout.addWidget(QLabel("Package controls"))
+        self.priority_button = QPushButton("Mark as priority")
+        self.priority_button.setDisabled(True)
+        control_layout.addWidget(self.priority_button)
+        control_layout.addWidget(QLabel("Integration controls"))
+        self.priority_button = QPushButton("Enable integration")
+        self.priority_button.setDisabled(True)
+        control_layout.addWidget(self.priority_button)
 
         # Enable custom context menu for the package tree
         self.package_tree.setContextMenuPolicy(Qt.CustomContextMenu)
