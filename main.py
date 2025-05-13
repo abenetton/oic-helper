@@ -1,51 +1,43 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QListWidget, QStackedWidget, QWidget
+from PySide6.QtWidgets import QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget
 import sys
-from ui.screens.screen_list import top_level_screens
+from ui.screens.explore_screen import ExploreScreen
+from ui.screens.compare_screen import CompareScreen
+from functools import partial
 
-class OICHelper(QMainWindow):
-    """Main application window for the OIC Helper Tool."""
-
+class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("OIC Helper Tool")
 
-        # Main layout
-        self.central_widget = QWidget()
-        self.setCentralWidget(self.central_widget)
-        self.layout = QVBoxLayout()
-        self.central_widget.setLayout(self.layout)
+        # Create buttons for "Explore" and "Compare"
+        explore_button = QPushButton("Explore")
+        compare_button = QPushButton("Compare")
 
-        # Navigation list
-        self.nav_list = QListWidget()
-        self.layout.addWidget(self.nav_list)
+        # Connect buttons to their respective methods
+        explore_button.clicked.connect(partial(self.open_screen, "explore"))
+        compare_button.clicked.connect(partial(self.open_screen, "compare"))
 
-        # Screen container
-        self.screen_container = QStackedWidget()
-        self.layout.addWidget(self.screen_container)
+        # Layout to hold the buttons
+        layout = QVBoxLayout()
+        layout.addWidget(explore_button)
+        layout.addWidget(compare_button)
 
-        # Populate screens
-        self.screens = {}
-        self.populate_screens()
+        # Central widget
+        self.main_menu_widget = QWidget()
+        self.main_menu_widget.setLayout(layout)
+        self.setCentralWidget(self.main_menu_widget)
 
-        # Connect navigation signals
-        self.nav_list.currentRowChanged.connect(self.switch_screen)
+    def open_screen(self, screen_type):
+        if screen_type == "explore":
+            self.setCentralWidget(ExploreScreen(self.return_to_main))
+        elif screen_type == "compare":
+            self.setCentralWidget(CompareScreen(self.return_to_main))
 
-    def populate_screens(self):
-        """Populate the navigation list and screen container with screens."""
-        for key, value in top_level_screens.items():
-            screen = value.screen()
-            self.screens[key] = screen
-            self.screen_container.addWidget(screen)
-            self.nav_list.addItem(value.label)
-
-    def switch_screen(self, index):
-        """Switch to the selected screen."""
-        if index < 0 or index >= len(self.screens):
-            return
-        self.screen_container.setCurrentIndex(index)
+    def return_to_main(self):
+        self.setCentralWidget(self.main_menu_widget)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = OICHelper()
+    window = MainWindow()
     window.show()
     sys.exit(app.exec())
