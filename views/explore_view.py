@@ -24,13 +24,22 @@ class ExploreView(BaseView):
         self.confirm_button.clicked.connect(self.confirm_selection)
         selector_layout.addWidget(self.confirm_button)
 
-        # Tree widget to display packages and integrations
-        self.package_tree = QTreeWidget()
-        self.package_tree.setHeaderLabels(["Package", "Integration"])
-        explore_layout.addWidget(self.package_tree)
-
         # Connect signals
         self.host_list.itemSelectionChanged.connect(self.update_confirm_button_state)
+
+        # Tree widget to display packages and integrations
+        self.package_tree = QTreeWidget()
+        self.package_tree.setHeaderLabels(["Integration", "Version", "Status"])
+        explore_layout.addWidget(self.package_tree)
+
+        # Set the column widths for the package tree
+        self.package_tree.setColumnWidth(0, self.package_tree.width() * 1 // 2)  # First column takes 1/2
+        self.package_tree.setColumnWidth(1, self.package_tree.width() * 1 // 4)  # Second column takes 1/4
+        self.package_tree.setColumnWidth(2, self.package_tree.width() * 1 // 4)  # Third column takes 1/4
+
+        # Adjust the stretch factors for the layout
+        explore_layout.setStretch(0, 1)  # Host list takes 1/4 of the space
+        explore_layout.setStretch(1, 3)  # Package tree takes 3/4 of the space
 
         # Initialize model and controller
         self.model = ExploreModel()
@@ -66,10 +75,13 @@ class ExploreView(BaseView):
         for package in packages:
             package_item = QTreeWidgetItem([package.name])
             self.package_tree.addTopLevelItem(package_item)
-            integrations = self.controller.get_integrations_for_package(package.name)
+            integrations = self.controller.get_integrations_for_package(package.id)
             for integration in integrations:
                 integration_item = QTreeWidgetItem([integration.name])
                 package_item.addChild(integration_item)
+                for version in integration.versions:
+                    version_item = QTreeWidgetItem(["", version[0], version[1]])
+                    integration_item.addChild(version_item)
 
     def update_confirm_button_state(self):
         self.confirm_button.setEnabled(bool(self.host_list.selectedItems()))
