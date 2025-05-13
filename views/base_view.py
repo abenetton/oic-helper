@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QWidget, QSpacerItem, QSizePolicy
 
-class BaseScreen(QWidget):
+class BaseView(QWidget):
     def __init__(self, title, back_callback):
         super().__init__()
         main_layout = QVBoxLayout()

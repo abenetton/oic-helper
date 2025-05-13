@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QStackedWidget
 import sys
-from ui.screens.explore_screen import ExploreScreen
-from ui.screens.compare_screen import CompareScreen
+from views.explore_view import ExploreView
+from views.compare_view import CompareView as CompareScreen
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -26,7 +26,7 @@ class MainWindow(QMainWindow):
 
         # Add widgets to the stack
         self.stack.addWidget(self.main_menu_widget)
-        self.explore_screen = ExploreScreen(self.return_to_main)
+        self.explore_screen = ExploreView(self.return_to_main)
         self.compare_screen = CompareScreen(self.return_to_main)
         self.stack.addWidget(self.explore_screen)
         self.stack.addWidget(self.compare_screen)
