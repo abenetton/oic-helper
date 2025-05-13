@@ -1,18 +1,30 @@
-from PySide6.QtWidgets import QVBoxLayout, QPushButton, QLabel, QWidget
+from PySide6.QtWidgets import QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QWidget, QSpacerItem, QSizePolicy
 
 class BaseScreen(QWidget):
     def __init__(self, title, back_callback):
         super().__init__()
-        layout = QVBoxLayout()
+        main_layout = QVBoxLayout()
 
-        # Title label
-        title_label = QLabel(title)
-        title_label.setStyleSheet("font-size: 24px; font-weight: bold;")
-        layout.addWidget(title_label)
+        # Header layout
+        header_layout = QHBoxLayout()
 
         # Back button
         back_button = QPushButton("Back")
         back_button.clicked.connect(back_callback)
-        layout.addWidget(back_button)
+        header_layout.addWidget(back_button)
 
-        self.setLayout(layout)
+        # Spacer to center the title
+        header_layout.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+
+        # Title label
+        title_label = QLabel(title)
+        title_label.setStyleSheet("font-size: 24px; font-weight: bold;")
+        header_layout.addWidget(title_label)
+
+        # Add another spacer to balance the layout
+        header_layout.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+
+        main_layout.addLayout(header_layout)
+
+        # Set the main layout
+        self.setLayout(main_layout)
