@@ -37,3 +37,22 @@ class ExploreController:
             # Reload the package tree to show the integrations
             self.populate_package_tree(self.host_id) # TODO: This is a workaround, find a better way to update the tree without reloading
             self.view.expand_tree_package(package_id)
+    
+    def toggle_show_all_packages(self):
+        self.show_only_priority = not self.show_only_priority
+        # Make sure that all packages are loaded
+        host = self.model.config.hosts[self.host_id]
+        if not host.packages_loaded and not self.show_only_priority:
+            host.get_all_packages()
+        # Reload the package tree to show all packages
+        self.populate_package_tree(self.host_id)
+
+    def mark_as_priority(self, package_id: str):
+        # Logic to mark the item as priority
+        host = self.model.config.hosts[self.host_id]
+        if package_id in host.priority_package_ids:
+            host.remove_priority_package(package_id)
+        else:
+            host.add_priority_package(package_id)
+        # Reload the package tree to show the updated priority
+        self.populate_package_tree(self.host_id)

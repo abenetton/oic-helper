@@ -86,7 +86,7 @@ class ExploreView(BaseView):
             print("No host selected.")
 
     def show_all_action(self):
-        pass
+        self.controller.toggle_show_all_packages()
 
     def update_confirm_button_state(self):
         self.confirm_button.setEnabled(bool(self.host_list.selectedItems()))
@@ -122,6 +122,9 @@ class ExploreView(BaseView):
     def mark_as_priority(self, event):
         # Logic to mark the item as priority
         print(f"Marking  as priority")
+        package_id = self.package_tree.currentItem().data(0, Qt.UserRole)
+        if package_id:
+            self.controller.mark_as_priority(package_id)      
 
     def enable_integration(self, event):
         # Logic to enable the integration
