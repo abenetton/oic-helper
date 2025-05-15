@@ -1,6 +1,4 @@
 from models.explore_model import ExploreModel
-from oic_tools.OICHost import OICHost
-from oic_tools.OICPackage import OICPackage
 
 
 class ExploreController:
@@ -30,3 +28,12 @@ class ExploreController:
     def is_package_prioritary(self, package_id: str) -> bool:
         return package_id in self.model.config.hosts[self.host_id].priority_package_ids
 
+    def load_integrations_for_package(self, package_id: str):
+        # Fetch integrations for the given package
+        host = self.model.config.hosts[self.host_id]
+        package = host.packages[package_id]
+        if not package.integrations_loaded:
+            package.get_all_integrations()
+            # Reload the package tree to show the integrations
+            self.populate_package_tree(self.host_id) # TODO: This is a workaround, find a better way to update the tree without reloading
+            self.view.expand_tree_package(package_id)

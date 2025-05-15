@@ -49,14 +49,6 @@ class ExploreView(BaseView):
         self.show_all_button.setDisabled(True)
         self.show_all_button.clicked.connect(self.show_all_action)
         control_layout.addWidget(self.show_all_button)
-        control_layout.addWidget(QLabel("Package controls"))
-        self.priority_button = QPushButton("Mark as priority")
-        self.priority_button.setDisabled(True)
-        control_layout.addWidget(self.priority_button)
-        control_layout.addWidget(QLabel("Integration controls"))
-        self.priority_button = QPushButton("Enable integration")
-        self.priority_button.setDisabled(True)
-        control_layout.addWidget(self.priority_button)
 
         # Enable custom context menu for the package tree
         self.package_tree.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -138,7 +130,9 @@ class ExploreView(BaseView):
     def on_tree_item_expanded(self, item):
         # Event handler for when a tree item is expanded
         print(f"Tree item expanded: {item.text(0)}")
-        # You can add additional logic here, e.g., lazy loading children, updating UI, etc.
+        package_id = item.data(0, Qt.UserRole)
+        if package_id:
+            self.controller.load_integrations_for_package(package_id)
 
     def display_host_list(self, hosts: dict[str, OICHost]):
         self.host_list.clear()
@@ -159,6 +153,13 @@ class ExploreView(BaseView):
             ])
             package_item.setData(0, Qt.UserRole, package.id)
             self.package_tree.addTopLevelItem(package_item)
+
+            if not package.integrations:
+                # If there are no integrations, add an empty integration item to allow for expansion
+                # This is a workaround to allow for expansion without any integrations
+                integration_item = QTreeWidgetItem()
+                package_item.addChild(integration_item)
+                continue
 
             for integration in package.integrations.values():
                 integration_item = QTreeWidgetItem([
@@ -183,3 +184,11 @@ class ExploreView(BaseView):
                     version_item.setData(1, Qt.UserRole, integration.id)
                     version_item.setData(2, Qt.UserRole, version[0])
                     integration_item.addChild(version_item)
+
+    def expand_tree_package(self, package_id: str):
+        # Find the package item in the tree and expand it
+        for i in range(self.package_tree.topLevelItemCount()):
+            item = self.package_tree.topLevelItem(i)
+            if item.data(0, Qt.UserRole) == package_id:
+                item.setExpanded(True)
+                break
