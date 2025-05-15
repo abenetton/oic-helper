@@ -14,6 +14,7 @@ class ExploreController:
         self.model = model
         self.view = view
         self.host_id = ""
+        self.show_only_priority = True
 
     def populate_host_list(self):
         hosts = self.model.fetch_hosts()
@@ -30,7 +31,7 @@ class ExploreController:
         if not host:
             raise ValueError(f"Host with ID {host_id} not found in config.")
         
-        ids = host.get_sorted_package_ids(priority_packages_only=True)
+        ids = host.get_sorted_package_ids(priority_packages_only=self.show_only_priority)
         packages = [host.packages[package_id] for package_id in ids]
 
         self.view.package_tree.clear()
