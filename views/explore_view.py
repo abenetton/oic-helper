@@ -1,8 +1,10 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QLabel, QListWidget, QPushButton, QTreeWidget, QMenu
+from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QLabel, QListWidget, QPushButton, QTreeWidget, QMenu, QTreeWidgetItem, QListWidgetItem
 
 from controllers.explore_controller import ExploreController
 from models.explore_model import ExploreModel
+from oic_tools.OICHost import OICHost
+from oic_tools.OICPackage import OICPackage
 from .base_view import BaseView
 
 
@@ -29,12 +31,12 @@ class ExploreView(BaseView):
 
         # Tree widget to display packages and integrations
         self.package_tree = QTreeWidget()
-        self.package_tree.setHeaderLabels(["Priority", "Integration", "Count", "Version", "Status"])
+        self.package_tree.setHeaderLabels(["Integration", "Priority", "Count", "Version", "Status"])
         explore_layout.addWidget(self.package_tree)
 
         # Set the column widths for the package tree
-        self.package_tree.setColumnWidth(0, self.package_tree.width() * 1 // 12)  # First column takes 1/2
-        self.package_tree.setColumnWidth(1, self.package_tree.width() * 6 // 12)  # First column takes 1/2
+        self.package_tree.setColumnWidth(0, self.package_tree.width() * 6 // 12)  # First column takes 1/2
+        self.package_tree.setColumnWidth(1, self.package_tree.width() * 1 // 12)  # First column takes 1/2
         self.package_tree.setColumnWidth(2, self.package_tree.width() * 1 // 12)  # First column takes 1/2
         self.package_tree.setColumnWidth(3, self.package_tree.width() * 2 // 12)  # Second column takes 1/4
         self.package_tree.setColumnWidth(4, self.package_tree.width() * 1 // 12)  # Third column takes 1/4
@@ -59,6 +61,9 @@ class ExploreView(BaseView):
         # Enable custom context menu for the package tree
         self.package_tree.setContextMenuPolicy(Qt.CustomContextMenu)
         self.package_tree.customContextMenuRequested.connect(self.show_context_menu)
+
+        # Connect the itemExpanded signal to a handler
+        self.package_tree.itemExpanded.connect(self.on_tree_item_expanded)
 
         # Adjust the stretch factors for the layout
         explore_layout.setStretch(0, 1)  # Host list takes 1/4 of the space
@@ -129,3 +134,52 @@ class ExploreView(BaseView):
     def enable_integration(self, event):
         # Logic to enable the integration
         print(f"Enabling integration for ")
+
+    def on_tree_item_expanded(self, item):
+        # Event handler for when a tree item is expanded
+        print(f"Tree item expanded: {item.text(0)}")
+        # You can add additional logic here, e.g., lazy loading children, updating UI, etc.
+
+    def display_host_list(self, hosts: dict[str, OICHost]):
+        self.host_list.clear()
+        for host in hosts.values():
+            item = QListWidgetItem(host.label)
+            item.setData(Qt.UserRole, host.id)
+            self.host_list.addItem(item)
+
+    def display_package_tree(self, package_data: list[OICPackage]):
+        self.package_tree.clear()
+        for package in package_data:
+            package_item = QTreeWidgetItem([
+                package.name,
+                "X" if self.controller.is_package_prioritary(package.id) else "",
+                str(package.integration_num),
+                "",  # Version column (empty for package)
+                ""   # Status column (empty for package)
+            ])
+            package_item.setData(0, Qt.UserRole, package.id)
+            self.package_tree.addTopLevelItem(package_item)
+
+            for integration in package.integrations.values():
+                integration_item = QTreeWidgetItem([
+                    integration.name,
+                    "", # Priority column (empty for integration)
+                    str(len(integration.versions)),
+                    "",  # Version column (empty for integration)
+                    ""   # Status column (empty for integration)
+                ])
+                integration_item.setData(0, Qt.UserRole, package.id)
+                integration_item.setData(1, Qt.UserRole, integration.id)
+                package_item.addChild(integration_item)
+                for version in integration.versions:
+                    version_item = QTreeWidgetItem([
+                        "", # Integration name (empty for version) 
+                        "", # Priority column (empty for version)
+                        "", # Count column (empty for version)
+                        version[0], 
+                        version[1]
+                    ])
+                    version_item.setData(0, Qt.UserRole, package.id)
+                    version_item.setData(1, Qt.UserRole, integration.id)
+                    version_item.setData(2, Qt.UserRole, version[0])
+                    integration_item.addChild(version_item)
