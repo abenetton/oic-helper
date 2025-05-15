@@ -49,6 +49,7 @@ class ExploreController:
 
     def mark_as_priority(self, package_id: str):
         # Logic to mark the item as priority
+        # TODO: Add save priority to config button
         host = self.model.config.hosts[self.host_id]
         if package_id in host.priority_package_ids:
             host.remove_priority_package(package_id)
