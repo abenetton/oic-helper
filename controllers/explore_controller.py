@@ -36,12 +36,21 @@ class ExploreController:
         self.view.package_tree.clear()
         for package in packages:
             integrations = package.get_all_integrations().values()
-            package_item = QTreeWidgetItem([package.name, str(package.integration_num)])
+            package_item = QTreeWidgetItem([("", "X")[self.is_package_prioritary(package.id)], package.name, str(package.integration_num)])
+            package_item.setData(0, Qt.UserRole, package.id)
             self.view.package_tree.addTopLevelItem(package_item)
             for integration in integrations:
-                integration_item = QTreeWidgetItem([integration.name, str(len(integration.versions))])
+                integration_item = QTreeWidgetItem(["", integration.name, str(len(integration.versions))])
+                integration_item.setData(0, Qt.UserRole, package.id)
+                integration_item.setData(1, Qt.UserRole, integration.id)
                 package_item.addChild(integration_item)
                 for version in integration.versions:
-                    version_item = QTreeWidgetItem(["", "", version[0], version[1]])
+                    version_item = QTreeWidgetItem(["", "", "", version[0], version[1]])
+                    version_item.setData(0, Qt.UserRole, package.id)
+                    version_item.setData(1, Qt.UserRole, integration.id)
+                    version_item.setData(2, Qt.UserRole, version[0])
                     integration_item.addChild(version_item)
+
+    def is_package_prioritary(self, package_id: str) -> bool:
+        return package_id in self.model.config.hosts[self.host_id].priority_package_ids
 
