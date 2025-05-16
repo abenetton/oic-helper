@@ -75,5 +75,24 @@ class OICHost:
             for pkg_id in self.priority_package_ids
         ]
 
+    def add_priority_package(self, package_id: str) -> None:
+        """
+        Add a package to the priority list.
+
+        :param package_id: The ID of the package to add.
+        """
+        if package_id not in self.priority_package_ids:
+            self.priority_package_ids.append(package_id)
+            self.priority_package_ids.sort()
+    
+    def remove_priority_package(self, package_id: str) -> None:
+        """
+        Remove a package from the priority list.
+
+        :param package_id: The ID of the package to remove.
+        """
+        if package_id in self.priority_package_ids:
+            self.priority_package_ids.remove(package_id)
+
     def __repr__(self):
         return f"Host(label={self.label}, base_url={self.base_url}, token=****)"

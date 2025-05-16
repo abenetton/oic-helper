@@ -47,12 +47,12 @@ class OICIntegration:
         """
 
         class CompareResultEnum(Enum):
-            EQUAL = "equal"
-            NEWER = "newer"
-            OLDER = "older"
-            HOST1_INACTIVE = "host1_inactive"
-            HOST2_INACTIVE = "host2_inactive"
-            HOST2_MISSING = "host2_missing"
+            EQUAL = "Versions are equal"
+            NEWER = "Host1 version is newer"
+            OLDER = "Host1 version is older"
+            HOST1_INACTIVE = "Integration is inactive on Host1"
+            HOST2_INACTIVE = "Integration is inactive on Host2"
+            HOST2_MISSING = "Integration is missing on Host2"
 
         def __init__(self, name: str, host1_version: tuple[str, str], host2_version: tuple[str, str] | None):
             self.name = name

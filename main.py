@@ -1,42 +1,47 @@
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import Footer, Header, OptionList
-from textual.widgets.option_list import Option
+from PySide6.QtWidgets import QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QStackedWidget
+import sys
+from views.explore_view import ExploreView
+from views.compare_view import CompareView as CompareScreen
 
-from ui.screens.screen_list import top_level_screens  # Importa top_level_screens
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("OIC Helper Tool")
+        self.resize(1000, 600)
 
+        # Create the stacked widget
+        self.stack = QStackedWidget()
+        self.setCentralWidget(self.stack)
 
-class OICHelper(App):
-    TITLE = "OIC Helper Tool"
-    #BINDINGS = [("c", "open_config", "Open config")]
-    CSS_PATH = "oic_helper.tcss"
+        # Create the main menu widget
+        self.main_menu_widget = QWidget()
+        layout = QVBoxLayout()
+        explore_button = QPushButton("Explore")
+        compare_button = QPushButton("Compare")
+        explore_button.clicked.connect(lambda: self.open_screen("explore"))
+        compare_button.clicked.connect(lambda: self.open_screen("compare"))
+        layout.addWidget(explore_button)
+        layout.addWidget(compare_button)
+        self.main_menu_widget.setLayout(layout)
 
-    # Popola SCREENS utilizzando top_level_screens
-    SCREENS = {key: value.screen for key, value in top_level_screens.items()}
+        # Add widgets to the stack
+        self.stack.addWidget(self.main_menu_widget)
+        self.explore_screen = ExploreView(self.return_to_main)
+        self.compare_screen = CompareScreen(self.return_to_main)
+        self.stack.addWidget(self.explore_screen)
+        self.stack.addWidget(self.compare_screen)
 
-    def compose(self) -> ComposeResult:
-        yield Header()
-        yield OptionList(
-            *[Option(value.label, id=value.identifier) for value in top_level_screens.values()]
-        )
-        yield Footer()
+    def open_screen(self, screen_type):
+        if screen_type == "explore":
+            self.stack.setCurrentWidget(self.explore_screen)
+        elif screen_type == "compare":
+            self.stack.setCurrentWidget(self.compare_screen)
 
-    # Generate event handler for option list
-    @on(OptionList.OptionSelected)
-    def handle_option_selected(self, event: OptionList.OptionSelected) -> None:
-        """Handle option selection."""
-
-        if event.option.id not in top_level_screens:
-            self.log(f"Invalid option selected: {event.option.id}")
-            return
-
-        app.push_screen(event.option.id)
-
-    def on_mount(self) -> None:
-        """Called when the app is mounted."""
-        # self.push_screen("compare") # TODO: Remove after testing
-
+    def return_to_main(self):
+        self.stack.setCurrentWidget(self.main_menu_widget)
 
 if __name__ == "__main__":
-    app = OICHelper()
-    app.run()
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
