@@ -1,8 +1,10 @@
-from PySide6.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QComboBox
+from typing import List, Tuple
+
+from PySide6.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QComboBox, QTreeWidget, QTreeWidgetItem
 
 from controllers.compare_controller import CompareController
 from models.compare_model import CompareModel
-from oic_tools import OICHost
+from oic_tools import OICHost, OICIntegration
 from .base_view import BaseView
 
 
@@ -23,7 +25,7 @@ class CompareView(BaseView):
         self.host2_dropdown = QComboBox()
         host_selector_layout.addWidget(self.host2_dropdown)
         self.compare_button = QPushButton("Compare")
-        # self.compare_button.clicked.connect(self.compare_host_action)
+        self.compare_button.clicked.connect(self.compare_host_action)
         host_selector_layout.addWidget(self.compare_button)
 
         host_selector_layout.setStretch(0, 1)
@@ -31,6 +33,16 @@ class CompareView(BaseView):
         host_selector_layout.setStretch(2, 1)
         host_selector_layout.setStretch(3, 2)
         host_selector_layout.setStretch(4, 1)
+
+        # Tree widget to display packages and integrations
+        self.package_tree = QTreeWidget()
+        self.package_tree.setHeaderLabels(["Integration", "Host1", "Host2", "Note"])
+        compare_layout.addWidget(self.package_tree)
+
+        self.package_tree.setColumnWidth(0, self.package_tree.width() * 5 // 12)  # First column takes 1/2
+        self.package_tree.setColumnWidth(1, self.package_tree.width() * 3 // 12)  # First column takes 1/2
+        self.package_tree.setColumnWidth(2, self.package_tree.width() * 3 // 12)  # First column takes 1/2
+        self.package_tree.setColumnWidth(3, self.package_tree.width() * 1 // 12)  # Second column takes 1/4
 
         # Initialize model and controller
         self.model = CompareModel()  # TODO: Move this to the controller
@@ -63,3 +75,31 @@ class CompareView(BaseView):
             self.host1_dropdown.setCurrentText(host.label)
         else:
             self.host2_dropdown.setCurrentText(host.label)
+
+    def compare_host_action(self):
+        host1: OICHost = self.host1_dropdown.currentData()
+        host2: OICHost = self.host2_dropdown.currentData()
+        if host1 and host2:
+            self.controller.compare_hosts(host1, host2)
+        else:
+            # Handle the case where one of the hosts is not selected. Should never happen
+            raise ValueError("Both hosts must be selected for comparison.")
+
+    def update_package_tree(self, package_list: List[Tuple[str, List[OICIntegration.OICCompare]]]):
+        self.package_tree.clear()
+
+        for package_name, integrations in package_list:
+            package_item = QTreeWidgetItem([
+                package_name
+            ])
+            self.package_tree.addTopLevelItem(package_item)
+            package_item.setExpanded(True)
+
+            for integration in integrations:
+                integration_item = QTreeWidgetItem([
+                    integration.name,
+                    f"{integration.host1_version[0]} - {integration.host1_version[1]}",
+                    f"{integration.host2_version[0]} - {integration.host2_version[1]}" if integration.host2_version else "N/A",
+                    integration.result.name
+                ])
+                package_item.addChild(integration_item)
