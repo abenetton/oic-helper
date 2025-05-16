@@ -57,3 +57,7 @@ class ExploreController:
             host.add_priority_package(package_id)
         # Reload the package tree to show the updated priority
         self.populate_package_tree(self.host_id)
+
+    def save_config(self):
+        # Logic to save the configuration
+        self.model.config.save()

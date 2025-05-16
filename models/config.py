@@ -1,13 +1,15 @@
 import json
-from typing import List
-from oic_tools.OICHost import OICHost
+
+from oic_tools import OICHost
+
 
 class Config:
     CONFIG_FILE = "config.json"
 
-    def __init__(self):
+    def __init__(self, auto_load: bool = True):
         self.hosts: dict[str, OICHost] = {}
-        self.load()
+        if auto_load:
+            self.load()
 
     def load(self):
         """Load configuration from the JSON file."""

@@ -50,6 +50,11 @@ class ExploreView(BaseView):
         self.show_all_button.clicked.connect(self.show_all_action)
         control_layout.addWidget(self.show_all_button)
 
+
+        self.save_config_button = QPushButton("Save config")
+        self.save_config_button.clicked.connect(self.save_config_action)
+        control_layout.addWidget(self.save_config_button)
+
         # Enable custom context menu for the package tree
         self.package_tree.setContextMenuPolicy(Qt.CustomContextMenu)
         self.package_tree.customContextMenuRequested.connect(self.show_context_menu)
@@ -195,3 +200,6 @@ class ExploreView(BaseView):
             if item.data(0, Qt.UserRole) == package_id:
                 item.setExpanded(True)
                 break
+
+    def save_config_action(self):
+        self.controller.save_config()
