@@ -27,6 +27,10 @@ class CompareView(BaseView):
         self.compare_button = QPushButton("Compare")
         self.compare_button.clicked.connect(self.compare_host_action)
         host_selector_layout.addWidget(self.compare_button)
+        self.generate_report = QPushButton("Generate report")
+        self.generate_report.clicked.connect(self.generate_report_action)
+        self.generate_report.setDisabled(True)
+        host_selector_layout.addWidget(self.generate_report)
 
         host_selector_layout.setStretch(0, 1)
         host_selector_layout.setStretch(1, 2)
@@ -79,6 +83,7 @@ class CompareView(BaseView):
     def compare_host_action(self):
         host1: OICHost = self.host1_dropdown.currentData()
         host2: OICHost = self.host2_dropdown.currentData()
+        self.generate_report.setDisabled(False)
         if host1 and host2:
             self.controller.compare_hosts(host1, host2)
         else:
@@ -100,6 +105,11 @@ class CompareView(BaseView):
                     integration.name,
                     f"{integration.host1_version[0]} - {integration.host1_version[1]}",
                     f"{integration.host2_version[0]} - {integration.host2_version[1]}" if integration.host2_version else "N/A",
-                    integration.result.name
+                    integration.result.value
                 ])
                 package_item.addChild(integration_item)
+
+    def generate_report_action(self):
+        self.generate_report.setDisabled(True)
+        self.controller.generate_report()
+        self.generate_report.setDisabled(False)
